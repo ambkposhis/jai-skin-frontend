@@ -152,9 +152,16 @@ export default function ScanPage() {
               Skin Score
             </p>
 
-            <h2 className="text-7xl font-bold mt-2">
-              {skinScore}
-            </h2>
+            <div className="flex items-center justify-center">
+  				<div className="relative w-44 h-44 rounded-full border-[12px] border-green-400 flex items-center justify-center">
+   					<div className="text-center">
+      					<p className="text-5xl font-bold">{skinScore}</p>
+      					<p className="text-green-300 text-sm">
+       						Skin Score
+      					</p>
+    				</div>
+  				</div>
+			</div>
 
           </div>
 
