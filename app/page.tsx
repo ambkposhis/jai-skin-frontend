@@ -128,12 +128,12 @@ export default function ScanPage() {
 
   <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-5 shadow-2xl">
 
-          <video
-  		ref={videoRef}
-  		autoPlay
-  		playsInline
-  		className="w-full rounded-2xl"
-		/>
+		<video
+  			ref={videoRef}
+  			autoPlay
+  			playsInline
+  				className="w-full rounded-2xl scale-x-[-1]"
+			/>	
 
 		</div>
 
