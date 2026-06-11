@@ -217,59 +217,38 @@ export default function ScanPage() {
 
             <div className="grid gap-3">
 
-  				{predictions.map((item, index) => (
-
-    			<div
-      				key={index}
-      				className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
-    				>
-
-      			<div>	
-
-        				<p className="capitalize text-lg">
-          					{item.label}
-        				</p>
-
-        				<p className="text-green-300 text-sm">
-          					Skin Analysis
-        				</p>
-
-      					</div>
-
-      						<div className="text-right">
-
-        						<p className="text-2xl font-bold">
-          						{item.confidence}%
-        						</p>
-
-      						</div>
-
-    					</div>
-
-  						))}
-
-					</div>
-
-                    <div className="w-full bg-white/10 rounded-full h-4">
-
-                      <div
-                        className="h-4 rounded-full bg-gradient-to-r from-green-400 to-green-600"
-                        style={{
-                          width:
-                            `${item.confidence}%`,
-                        }}
-                      />
-
-                    </div>
-
-                  </div>
-
-                )
-              )}
-
-            </div>
-
-          </div>
+				  {predictions.map((item, index) => (
+				
+			    <div
+				      key={index}
+				      className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
+				    >
+				
+			      <div>
+				
+				        <p className="capitalize text-lg">
+				          {item.label}
+				        </p>
+				
+				        <p className="text-green-300 text-sm">
+				          Skin Analysis
+				        </p>
+				
+			      </div>
+				
+			      <div className="text-right">
+				
+				        <p className="text-2xl font-bold">
+				          {item.confidence}%
+				        </p>
+				
+			      </div>
+				
+				</div>
+				
+				  ))}
+				
+			</div>
 
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
