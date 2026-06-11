@@ -122,7 +122,7 @@ export default function ScanPage() {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 h-[calc(100vh-180px)]">
+      <div className="grid lg:grid-cols-[420px_1fr] gap-8 h-[calc(100vh-180px)]">
 
         <div className="sticky top-6 self-start">
 
@@ -141,6 +141,9 @@ export default function ScanPage() {
 	      				Live AI Analysis
 	    			</span>
 	  			</div>
+			  <div className="mt-3 bg-white/5 border border-white/10 rounded-xl p-3">
+		  			📷 Face Detected
+			  </div>
 	
 			</div>
 	
@@ -263,14 +266,25 @@ export default function ScanPage() {
               Recommendations
             </h2>
 
-            <ul className="space-y-3">
+            <div className="grid gap-3">
 
-              <li>✓ Use SPF daily</li>
-              <li>✓ Stay hydrated</li>
-              <li>✓ Maintain skincare routine</li>
-              <li>✓ Monitor skin changes</li>
-
-            </ul>
+			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+			    ☀ SPF Daily
+			  </div>
+			
+			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+			    💧 Stay Hydrated
+			  </div>
+			
+			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+			    🌙 Night Repair
+			  </div>
+			
+			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+			    🧴 Moisturize
+			  </div>
+			
+			</div>
 
           </div>
 
