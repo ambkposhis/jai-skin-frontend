@@ -155,7 +155,7 @@ export default function ScanPage() {
    	 	maxHeight: "100%"
  	 	}}
 		>
-
+		
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
             <p className="text-green-300 text-lg">
@@ -173,8 +173,8 @@ export default function ScanPage() {
   				</div>
 			</div>
 
-          </div>
-
+          	</div>
+			</div>
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
             <h2 className="text-3xl font-bold text-green-300 mb-6">
