@@ -215,24 +215,40 @@ export default function ScanPage() {
 
             </div>
 
-            <div className="space-y-5">
+            <div className="grid gap-3">
 
-              {predictions.map(
-                (item, index) => (
+  				{predictions.map((item, index) => (
 
-                  <div key={index}>
+    			<div
+      				key={index}
+      				className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
+    				>
 
-                    <div className="flex justify-between mb-2">
+      			<div>	
 
-                      <span className="capitalize">
-                        {item.label}
-                      </span>
+        				<p className="capitalize text-lg">
+          					{item.label}
+        				</p>
 
-                      <span>
-                        {item.confidence}%
-                      </span>
+        				<p className="text-green-300 text-sm">
+          					Skin Analysis
+        				</p>
 
-                    </div>
+      					</div>
+
+      						<div className="text-right">
+
+        						<p className="text-2xl font-bold">
+          						{item.confidence}%
+        						</p>
+
+      						</div>
+
+    					</div>
+
+  						))}
+
+					</div>
 
                     <div className="w-full bg-white/10 rounded-full h-4">
 
