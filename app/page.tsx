@@ -114,7 +114,7 @@ export default function ScanPage() {
 
       <div className="mb-10">
         <h1 className="text-7xl font-bold">
-          Jais
+          J'ais
         </h1>
 
         <p className="text-green-300 text-xl mt-2 tracking-[0.35em]">
@@ -217,38 +217,38 @@ export default function ScanPage() {
 
             <div className="grid gap-3">
 
-				  {predictions.map((item, index) => (
+			{predictions.map((item, index) => (
 				
-			    <div
-				      key={index}
-				      className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
-				    >
+			<div
+				key={index}
+				className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
+			>
 				
-			      <div>
+			<div>
 				
-				        <p className="capitalize text-lg">
-				          {item.label}
-				        </p>
+				<p className="capitalize text-lg">
+				{item.label}
+				</p>
 				
-				        <p className="text-green-300 text-sm">
-				          Skin Analysis
-				        </p>
+				<p className="text-green-300 text-sm">
+				Skin Analysis
+				</p>
 				
-			      </div>
+			    </div>
 				
-			      <div className="text-right">
+			    <div className="text-right">
 				
-				        <p className="text-2xl font-bold">
-				          {item.confidence}%
-				        </p>
+					<p className="text-2xl font-bold">
+				    {item.confidence}%
+				    </p>
 				
-			      </div>
-				
-				</div>
-				
-				  ))}
+			    </div>
 				
 			</div>
+				
+		))}
+				
+	</div>
 
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
