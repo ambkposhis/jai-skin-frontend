@@ -173,7 +173,10 @@ export default function ScanPage() {
 
             <div className="space-y-4 mb-8">
 
-              <div className="bg-black/20 p-4 rounded-xl">
+              <div className="bg-white/5 backdrop-blur-2xl
+								border border-white/10
+								rounded-3xl
+								p-5">
 
                 <p className="text-green-300">
                   Assessment
@@ -187,7 +190,10 @@ export default function ScanPage() {
 
               {pigmentation && (
 
-                <div className="bg-black/20 p-4 rounded-xl">
+                <div className="bg-white/5 backdrop-blur-2xl
+								border border-white/10
+								rounded-3xl
+								p-5">
 
                   <p className="text-green-300">
                     Pigmentation Level
