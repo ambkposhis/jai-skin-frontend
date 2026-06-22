@@ -156,13 +156,13 @@ export default function ScanPage() {
  	 	}}
 		>
 		
-          <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
+        <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
-            <p className="text-green-300 text-lg">
+        	<p className="text-green-300 text-lg">
               Skin Score
             </p>
 
-            <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center">
   				<div className="relative w-56 h-56 rounded-full border-[12px] border-green-400 flex items-center justify-center">
    					<div className="text-center">
       					<p className="text-6xl font-bold">{skinScore}</p>
@@ -173,8 +173,7 @@ export default function ScanPage() {
   				</div>
 			</div>
 
-          	</div>
-			</div>
+          </div>
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
 
             <h2 className="text-3xl font-bold text-green-300 mb-6">
@@ -234,17 +233,18 @@ export default function ScanPage() {
 				className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
 			>
 				
-			<div>
-				
-				<p className="capitalize text-lg">
-				{item.label}
-				</p>
-				
-				<p className="text-green-300 text-sm">
-				Skin Analysis
-				</p>
+				<div>
+					
+					<p className="capitalize text-lg">
+					{item.label}
+					</p>
+					
+					<p className="text-green-300 text-sm">
+					Skin Analysis
+					</p>
 				
 			    </div>
+			</div>
 				
 			    <div className="text-right">
 				
