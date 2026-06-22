@@ -110,7 +110,7 @@ export default function ScanPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-8">
+    <main className="min-h-[100dvh] bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-8">
 
       <div className="mb-10">
         <h1 className="text-7xl font-bold">
