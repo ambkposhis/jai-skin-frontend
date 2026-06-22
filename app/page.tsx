@@ -110,193 +110,188 @@ export default function ScanPage() {
   };
 
   return (
-    <main className="min-h-[100dvh] bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-8">
+    <main className="min-h-[100dvh] bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-4 md:p-8">
 
       <div className="mb-10">
-        <h1 className="text-7xl font-bold">
+        <h1 className="text-4xl md:text-7xl font-bold">
           J'ais
         </h1>
 
-        <p className="text-green-300 text-xl mt-2 tracking-[0.35em]">
+        <p className="text-green-300 text-sm md:text-xl mt-2 tracking-[0.35em]">
           a i c e ' s specialist
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[420px_1fr] gap-8 h-[calc(100vh-180px)]">
+      <div className="grid lg:grid-cols-[420px_1fr] gap-8">
 
-        <div className="sticky top-6 self-start">
-
-  <div className="relative backdrop-blur-2xl bg-white/10 border border-white/10 rounded-3xl p-5 shadow-2xl">
-
-	  <video
-	    ref={videoRef}
-	    autoPlay
-	    playsInline
-	    className="w-full rounded-2xl scale-x-[-1]"
-	  />
-
-	  	<div className="mt-4 flex items-center gap-2">
-	    		<div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
-	    			<span className="text-green-300">
-	      				Live AI Analysis
-	    			</span>
-	  			</div>
-			  <div className="mt-3 bg-white/5 border border-white/10 rounded-xl p-3">
-		  			📷 Face Detected
-			  </div>
+	  {/* LEFT PANEL */}
+	  <div className="lg:sticky lg:top-6 self-start">
 	
-			</div>
+	    <div className="relative backdrop-blur-2xl bg-white/10 border border-white/10 rounded-3xl p-5 shadow-2xl">
 	
-		</div>
-
-        	<div
- 	 	className="space-y-6 overflow-y-auto pr-3"
- 	 	style={{
-   	 	maxHeight: "100%"
- 	 	}}
-		>
-		
-        <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
-
-        	<p className="text-green-300 text-lg">
-              Skin Score
-            </p>
-
-        <div className="flex items-center justify-center">
-  				<div className="relative w-56 h-56 rounded-full border-[12px] border-green-400 flex items-center justify-center">
-   					<div className="text-center">
-      					<p className="text-6xl font-bold">{skinScore}</p>
-      					<p className="text-green-300 text-sm">
-       						Skin Score
-      					</p>
-    				</div>
-  				</div>
-			</div>
-
-          </div>
-          <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
-
-            <h2 className="text-3xl font-bold text-green-300 mb-6">
-              Analysis Results
-            </h2>
-
-            <div className="space-y-4 mb-8">
-
-              <div className="bg-white/5 backdrop-blur-2xl
-								border border-white/10
-								rounded-3xl
-								p-5">
-
-                <p className="text-green-300">
-                  Assessment
-                </p>
-
-                <h3 className="text-2xl font-bold">
-                  {assessment}
-                </h3>
-
-              </div>
-
-              {pigmentation && (
-
-                <div className="bg-white/5 backdrop-blur-2xl
-								border border-white/10
-								rounded-3xl
-								p-5">
-
-                  <p className="text-green-300">
-                    Pigmentation Level
-                  </p>
-
-                  <h3 className="text-2xl font-bold">
-                    {pigmentation.level}
-                  </h3>
-
-                  <p className="mt-2">
-                    Confidence:
-                    {" "}
-                    {pigmentation.confidence}%
-                  </p>
-
-                </div>
-
-              )}
-
-            </div>
-
-            <div className="grid gap-3">
-
-			{predictions.map((item, index) => (
-				
-			<div
-				key={index}
-				className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
-			>
-				
-				<div>
-					
-					<p className="capitalize text-lg">
-					{item.label}
-					</p>
-					
-					<p className="text-green-300 text-sm">
-					Skin Analysis
-					</p>
-				
-			    </div>
-			</div>
-				
-			    <div className="text-right">
-				
-					<p className="text-2xl font-bold">
-				    {item.confidence}%
-				    </p>
-				
-			    </div>
-				
-			</div>
-				
-		))}
-				
+	      <video
+	        ref={videoRef}
+	        autoPlay
+	        playsInline
+	        className="w-full rounded-2xl scale-x-[-1]"
+	      />
+	
+	      <div className="mt-4 flex items-center gap-2">
+	        <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+	        <span className="text-green-300">
+	          Live AI Analysis
+	        </span>
+	      </div>
+	
+	      <div className="mt-3 bg-white/5 border border-white/10 rounded-xl p-3">
+	        📷 Face Detected
+	      </div>
+	
+	    </div>
+	
+	  </div>
+	
+	  {/* RIGHT PANEL */}
+	  <div className="space-y-6">
+	
+	    {/* SKIN SCORE */}
+	    <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
+	
+	      <p className="text-green-300 text-lg">
+	        Skin Score
+	      </p>
+	
+	      <div className="flex items-center justify-center">
+	        <div className="relative w-56 h-56 rounded-full border-[12px] border-green-400 flex items-center justify-center">
+	
+	          <div className="text-center">
+	            <p className="text-6xl font-bold">
+	              {skinScore}
+	            </p>
+	
+	            <p className="text-green-300 text-sm">
+	              Skin Score
+	            </p>
+	          </div>
+	
+	        </div>
+	      </div>
+	
+	    </div>
+	
+	    {/* ANALYSIS RESULTS */}
+	    <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
+	
+	      <h2 className="text-3xl font-bold text-green-300 mb-6">
+	        Analysis Results
+	      </h2>
+	
+	      <div className="space-y-4 mb-8">
+	
+	        <div className="bg-white/5 border border-white/10 rounded-3xl p-5">
+	
+	          <p className="text-green-300">
+	            Assessment
+	          </p>
+	
+	          <h3 className="text-2xl font-bold">
+	            {assessment}
+	          </h3>
+	
+	        </div>
+	
+	        {pigmentation && (
+	
+	          <div className="bg-white/5 border border-white/10 rounded-3xl p-5">
+	
+	            <p className="text-green-300">
+	              Pigmentation Level
+	            </p>
+	
+	            <h3 className="text-2xl font-bold">
+	              {pigmentation.level}
+	            </h3>
+	
+	            <p className="mt-2">
+	              Confidence: {pigmentation.confidence}%
+	            </p>
+	
+	          </div>
+	
+	        )}
+	
+	      </div>
+	
+	      <div className="grid gap-3">
+	
+	        {predictions.map((item, index) => (
+	
+	          <div
+	            key={index}
+	            className="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center"
+	          >
+	
+	            <div>
+	              <p className="capitalize text-lg">
+	                {item.label}
+	              </p>
+	
+	              <p className="text-green-300 text-sm">
+	                Skin Analysis
+	              </p>
+	            </div>
+	
+	            <div className="text-right">
+	              <p className="text-2xl font-bold">
+	                {item.confidence}%
+	              </p>
+	            </div>
+	
+	          </div>
+	
+	        ))}
+	
+	      </div>
+	
+	    </div>
+	
+	    {/* RECOMMENDATIONS */}
+	    <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
+	
+	      <h2 className="text-2xl font-bold text-green-300 mb-4">
+	        Recommendations
+	      </h2>
+	
+	      <div className="grid gap-3">
+	
+	        <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+	          ☀ SPF Daily
+	        </div>
+	
+	        <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+	          💧 Stay Hydrated
+	        </div>
+	
+	        <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+	          🌙 Night Repair
+	        </div>
+	
+	        <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+	          🧴 Moisturize
+	        </div>
+	
+	      </div>
+	
+	    </div>
+	
+	  </div>
+	
 	</div>
+	<canvas
+	  ref={canvasRef}
+	  className="hidden"
+	/>
 
-          <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
-
-            <h2 className="text-2xl font-bold text-green-300 mb-4">
-              Recommendations
-            </h2>
-
-            <div className="grid gap-3">
-
-			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-			    ☀ SPF Daily
-			  </div>
-			
-			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-			    💧 Stay Hydrated
-			  </div>
-			
-			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-			    🌙 Night Repair
-			  </div>
-			
-			  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-			    🧴 Moisturize
-			  </div>
-			
-			</div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <canvas
-        ref={canvasRef}
-        className="hidden"
-      />
-
-    </main>
-  );
+	</main>
+	);
 }
