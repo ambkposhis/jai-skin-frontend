@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayRef = useRef<HTMLCanvasElement>(null);
 
   const [predictions, setPredictions] = useState<any[]>([]);
   const [skinScore, setSkinScore] = useState<number>(0);
   const [faceDetected, setFaceDetected] = useState(false);
   const [assessment, setAssessment] = useState("Analyzing...");
+  const [faceBox, setFaceBox] = useState<any>(null);
 
   useEffect(() => {
     startCamera();
@@ -22,6 +24,36 @@ export default function ScanPage() {
 
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+
+  if (!overlayRef.current) return;
+  if (!videoRef.current) return;
+
+  const canvas = overlayRef.current;
+  const video = videoRef.current;
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (!faceBox) return;
+
+  ctx.strokeStyle = "#00ff66";
+  ctx.lineWidth = 4;
+
+  ctx.strokeRect(
+    faceBox.x,
+    faceBox.y,
+    faceBox.w,
+    faceBox.h
+  );
+
+  }, [faceBox]);
 
   async function startCamera() {
     try {
@@ -83,6 +115,7 @@ export default function ScanPage() {
           setSkinScore(data.skin_score || 0);
           setFaceDetected(data.face_detected || false);
           setAssessment(data.assessment || "Analyzing...");
+          setFaceBox(data.face_box || null);
 
         } catch (err) {
           console.error(err);
@@ -126,12 +159,21 @@ export default function ScanPage() {
         <p className="text-green-300 text-xl mb-4">
             Live Camera Feed
         </p>
+        <div className="relative">
+
           <video
             ref={videoRef}
             autoPlay
             playsInline
             className="w-full rounded-2xl"
           />
+        
+          <canvas
+            ref={overlayRef}
+            className="absolute top-0 left-0 w-full h-full pointer-events-none"
+          />
+      
+        </div>
         </div>
 
         <div className="space-y-6">
