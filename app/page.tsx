@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const overlayRef = useRef<HTMLCanvasElement>(null);
+	
   const [predictions, setPredictions] = useState<any[]>([]);
   const [skinScore, setSkinScore] = useState<number>(0);
 
@@ -14,6 +15,7 @@ export default function ScanPage() {
 
   const [assessment, setAssessment] =
     useState("");
+  const [faceBox, setFaceBox] = useState<any>(null);
 
   useEffect(() => {
     startCamera();
@@ -26,6 +28,36 @@ export default function ScanPage() {
 
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+
+	  if (!overlayRef.current) return;
+	  if (!videoRef.current) return;
+	
+	  const canvas = overlayRef.current;
+	  const video = videoRef.current;
+	
+	  canvas.width = video.videoWidth;
+	  canvas.height = video.videoHeight;
+	
+	  const ctx = canvas.getContext("2d");
+	
+	  if (!ctx) return;
+	
+	  ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	  if (!faceBox) return;
+	
+	  ctx.strokeStyle = "#00ff66";
+	  ctx.lineWidth = 4;
+	
+	  ctx.strokeRect(
+	    faceBox.x,
+	    faceBox.y,
+	    faceBox.w,
+	    faceBox.h
+	  );
+	
+  }, [faceBox]);
 
   const startCamera = async () => {
     try {
@@ -99,6 +131,9 @@ export default function ScanPage() {
           setAssessment(
             data.assessment || ""
           );
+		  setFaceBox(
+		    data.face_box || null
+		  );
 
         } catch (error) {
           console.error(error);
@@ -129,13 +164,22 @@ export default function ScanPage() {
 	
 	    <div className="relative backdrop-blur-2xl bg-white/10 border border-white/10 rounded-3xl p-5 shadow-2xl">
 	
-	      <video
-	        ref={videoRef}
-	        autoPlay
-	        playsInline
-	        className="w-full rounded-2xl scale-x-[-1]"
-	      />
+	     <div className="relative">
+
+	  	<video
+		    ref={videoRef}
+		    autoPlay
+		    playsInline
+		    className="w-full rounded-2xl scale-x-[-1]"
+		  />
 	
+		  <canvas
+		    ref={overlayRef}
+		    className="absolute top-0 left-0 w-full h-full pointer-events-none"
+		  />
+	
+		</div>
+		
 	      <div className="mt-4 flex items-center gap-2">
 	        <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
 	        <span className="text-green-300">
@@ -144,7 +188,7 @@ export default function ScanPage() {
 	      </div>
 	
 	      <div className="mt-3 bg-white/5 border border-white/10 rounded-xl p-3">
-	        📷 Face Detected
+	        {faceBox ? "📷 Face Detected" : "❌ No Face Detected"}
 	      </div>
 	
 	    </div>
