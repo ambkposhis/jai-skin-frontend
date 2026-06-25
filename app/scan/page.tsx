@@ -12,6 +12,7 @@ export default function ScanPage() {
   const [faceDetected, setFaceDetected] = useState(false);
   const [assessment, setAssessment] = useState("Analyzing...");
   const [faceBox, setFaceBox] = useState<any>(null);
+  const [regions, setRegions] = useState<any>({});
 
   useEffect(() => {
     startCamera();
@@ -24,10 +25,11 @@ export default function ScanPage() {
 
     return () => clearInterval(interval);
   }, []);
-  useEffect(() => {
+useEffect(() => {
 
   if (!overlayRef.current) return;
   if (!videoRef.current) return;
+  if (!faceBox) return;
 
   const canvas = overlayRef.current;
   const video = videoRef.current;
@@ -41,19 +43,57 @@ export default function ScanPage() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (!faceBox) return;
+  const x = faceBox.x;
+  const y = faceBox.y;
+  const w = faceBox.w;
+  const h = faceBox.h;
 
-  ctx.strokeStyle = "#00ff66";
-  ctx.lineWidth = 4;
-
-  ctx.strokeRect(
-    faceBox.x,
-    faceBox.y,
-    faceBox.w,
-    faceBox.h
+  drawRegion(
+    ctx,
+    x + w * 0.20,
+    y,
+    w * 0.60,
+    h * 0.28,
+    regions.forehead
   );
 
-  }, [faceBox]);
+  drawRegion(
+    ctx,
+    x,
+    y + h * 0.28,
+    w * 0.42,
+    h * 0.44,
+    regions.left_cheek
+  );
+
+  drawRegion(
+    ctx,
+    x + w * 0.58,
+    y + h * 0.28,
+    w * 0.42,
+    h * 0.44,
+    regions.right_cheek
+  );
+
+  drawRegion(
+    ctx,
+    x + w * 0.35,
+    y + h * 0.25,
+    w * 0.30,
+    h * 0.53,
+    regions.nose
+  );
+
+  drawRegion(
+    ctx,
+    x + w * 0.25,
+    y + h * 0.72,
+    w * 0.50,
+    h * 0.28,
+    regions.chin
+  );
+
+}, [faceBox, regions]);
 
   async function startCamera() {
     try {
@@ -116,6 +156,7 @@ export default function ScanPage() {
           setFaceDetected(data.face_detected || false);
           setAssessment(data.assessment || "Analyzing...");
           setFaceBox(data.face_box || null);
+          setRegions(data.regions || {});
 
         } catch (err) {
           console.error(err);
@@ -123,6 +164,75 @@ export default function ScanPage() {
       },
       "image/jpeg",
       0.9
+    );
+  }
+  function drawRegion(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  region: any
+) {
+
+    if (!region) return;
+  
+    let color = "#00ff66";
+  
+    switch (region.label.toLowerCase()) {
+  
+      case "redness":
+        color = "#ff4444";
+        break;
+  
+      case "pigmentation":
+        color = "#ffd633";
+        break;
+  
+      case "dark spots":
+        color = "#ff8800";
+        break;
+  
+      case "pores":
+        color = "#00ccff";
+        break;
+  
+      case "non inflammatory acne black heads":
+        color = "#0099ff";
+        break;
+  
+      case "non inflammatory acne white heads":
+        color = "#cc66ff";
+        break;
+  
+      default:
+        color = "#00ff66";
+    }
+  
+    ctx.beginPath();
+    
+    ctx.roundRect(
+      x,
+      y,
+      w,
+      h,
+      18
+    );
+    
+    ctx.fillStyle = color + "55";
+    ctx.fill();
+    
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  
+    ctx.fillStyle = "white";
+    ctx.font = "16px Arial";
+  
+    ctx.fillText(
+      region.label,
+      x + 5,
+      y + 20
     );
   }
 
@@ -160,19 +270,19 @@ export default function ScanPage() {
             Live Camera Feed
         </p>
         <div className="relative">
-
+        
           <video
             ref={videoRef}
             autoPlay
             playsInline
-            className="w-full rounded-2xl"
+            className="w-full rounded-2xl scale-x-[-1]"
           />
         
           <canvas
             ref={overlayRef}
-            className="absolute top-0 left-0 w-full h-full pointer-events-none"
+            className="absolute top-0 left-0 w-full h-full pointer-events-none scale-x-[-1]"
           />
-      
+        
         </div>
         </div>
 
