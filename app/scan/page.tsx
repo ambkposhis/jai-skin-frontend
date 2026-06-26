@@ -58,18 +58,20 @@ useEffect(() => {
     faceBox.h * scaleY
   );
 
+console.log("Regions object:", regions);
+
 Object.values(regions).forEach((region: any) => {
 
-  console.log("REGION:", region);
-
-  drawRegion(
-    ctx,
-    region.x * scaleX,
-    region.y * scaleY,
-    region.w * scaleX,
-    region.h * scaleY,
-    region
-  );
+  console.log("Drawing region:", region);
+  
+    drawRegion(
+      ctx,
+      region.x * scaleX,
+      region.y * scaleY,
+      region.w * scaleX,
+      region.h * scaleY,
+      region
+    );
 
 });
 
