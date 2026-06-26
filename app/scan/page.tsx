@@ -194,32 +194,16 @@ Object.values(regions).forEach((region: any) => {
         color = "#00ff66";
     }
   
-    ctx.beginPath();
-    
-    ctx.roundRect(
-      x,
-      y,
-      w,
-      h,
-      18
-    );
-    
-    ctx.fillStyle = color + "55";
-    ctx.fill();
-    
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
-    ctx.stroke();
+   ctx.fillStyle = "rgba(255,0,0,0.5)";
+   ctx.fillRect(x, y, w, h);
   
-    ctx.fillStyle = "white";
-    ctx.font = "16px Arial";
+   ctx.strokeStyle = "red";
+   ctx.lineWidth = 3;
+   ctx.strokeRect(x, y, w, h);
   
-    ctx.fillText(
-      region.label,
-      x + 5,
-      y + 20
-    );
-  }
+   ctx.fillStyle = "white";
+   ctx.font = "18px Arial";
+   ctx.fillText(region.label, x + 5, y + 20);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-8">
