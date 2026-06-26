@@ -120,13 +120,13 @@ Object.values(regions).forEach((region: any) => {
 
         try {
           const response = await fetch(
-            "http://127.0.0.1:8000/predict",
+            "https://allen-bk-jai-skin-analyzer.hf.space/predict",
             {
               method: "POST",
               body: formData,
             }
           );
-
+        
           const data = await response.json();
 
          console.log("API RESPONSE:", data);
@@ -204,7 +204,7 @@ Object.values(regions).forEach((region: any) => {
    ctx.fillStyle = "white";
    ctx.font = "18px Arial";
    ctx.fillText(region.label, x + 5, y + 20);
-
+  }
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-950 via-green-900 to-black text-white p-8">
 
