@@ -174,7 +174,8 @@ useEffect(() => {
   h: number,
   region: any
 ) {
-
+    console.log("DRAWING:", region);
+    
     if (!region) return;
   
     let color = "#00ff66";
