@@ -26,6 +26,7 @@ export default function ScanPage() {
     return () => clearInterval(interval);
   }, []);
 useEffect(() => {
+  console.log("DRAW EFFECT");
 
   if (!overlayRef.current) return;
   if (!videoRef.current) return;
@@ -134,6 +135,10 @@ Object.values(regions).forEach((region: any) => {
           setSkinScore(data.skin_score || 0);
           setFaceDetected(data.face_detected || false);
           setAssessment(data.assessment || "Analyzing...");
+          
+          console.log("FACE BOX:", data.face_box);
+          console.log("REGIONS:", data.regions);
+          
           setFaceBox(data.face_box || null);
           setRegions(data.regions || {});
 
