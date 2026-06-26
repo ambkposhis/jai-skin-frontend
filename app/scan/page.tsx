@@ -29,29 +29,38 @@ useEffect(() => {
 
   if (!overlayRef.current) return;
   if (!videoRef.current) return;
+  if (!faceBox) return;
 
   const canvas = overlayRef.current;
   const video = videoRef.current;
 
-  const draw = () => {
-    const rect = video.getBoundingClientRect();
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Draw face box
+  ctx.strokeStyle = "#00ff66";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(
+    faceBox.x,
+    faceBox.y,
+    faceBox.w,
+    faceBox.h
+  );
 
-    // BIG RED TEST BOX
-    ctx.fillStyle = "rgba(255,0,0,0.5)";
-    ctx.fillRect(50, 50, 200, 200);
-  };
+  console.log("REGIONS:", regions);
 
-  draw();
+  drawRegion(ctx, faceBox.x + faceBox.w * 0.20, faceBox.y, faceBox.w * 0.60, faceBox.h * 0.28, regions.forehead);
+  drawRegion(ctx, faceBox.x, faceBox.y + faceBox.h * 0.28, faceBox.w * 0.42, faceBox.h * 0.44, regions.left_cheek);
+  drawRegion(ctx, faceBox.x + faceBox.w * 0.58, faceBox.y + faceBox.h * 0.28, faceBox.w * 0.42, faceBox.h * 0.44, regions.right_cheek);
+  drawRegion(ctx, faceBox.x + faceBox.w * 0.35, faceBox.y + faceBox.h * 0.25, faceBox.w * 0.30, faceBox.h * 0.53, regions.nose);
+  drawRegion(ctx, faceBox.x + faceBox.w * 0.25, faceBox.y + faceBox.h * 0.72, faceBox.w * 0.50, faceBox.h * 0.28, regions.chin);
 
-}, []);
+}, [faceBox, regions]);
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
