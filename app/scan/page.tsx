@@ -34,67 +34,30 @@ useEffect(() => {
   const canvas = overlayRef.current;
   const video = videoRef.current;
 
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
+  const rect = video.getBoundingClientRect();
+
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+
+  const scaleX = rect.width / video.videoWidth;
+  const scaleY = rect.height / video.videoHeight;
 
   const ctx = canvas.getContext("2d");
-
   if (!ctx) return;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  const x = faceBox.x;
-  const y = faceBox.y;
-  const w = faceBox.w;
-  const h = faceBox.h;
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 4;
 
-  drawRegion(
-    ctx,
-    x + w * 0.20,
-    y,
-    w * 0.60,
-    h * 0.28,
-    regions.forehead
+  ctx.strokeRect(
+      faceBox.x * scaleX,
+      faceBox.y * scaleY,
+      faceBox.w * scaleX,
+      faceBox.h * scaleY
   );
 
-  drawRegion(
-    ctx,
-    x,
-    y + h * 0.28,
-    w * 0.42,
-    h * 0.44,
-    regions.left_cheek
-  );
-
-  drawRegion(
-    ctx,
-    x + w * 0.58,
-    y + h * 0.28,
-    w * 0.42,
-    h * 0.44,
-    regions.right_cheek
-  );
-
-  drawRegion(
-    ctx,
-    x + w * 0.35,
-    y + h * 0.25,
-    w * 0.30,
-    h * 0.53,
-    regions.nose
-  );
-
-  drawRegion(
-    ctx,
-    x + w * 0.25,
-    y + h * 0.72,
-    w * 0.50,
-    h * 0.28,
-    regions.chin
-  );
-
-}, [faceBox, regions]);
-
+}, [faceBox]);
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
