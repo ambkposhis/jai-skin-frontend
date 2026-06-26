@@ -34,31 +34,75 @@ useEffect(() => {
   const canvas = overlayRef.current;
   const video = videoRef.current;
 
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
+  const rect = video.getBoundingClientRect();
+  
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  
+  const scaleX = rect.width / video.videoWidth;
+  const scaleY = rect.height / video.videoHeight;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw face box
+  // Face Box
   ctx.strokeStyle = "#00ff66";
   ctx.lineWidth = 3;
+
   ctx.strokeRect(
-    faceBox.x,
-    faceBox.y,
-    faceBox.w,
-    faceBox.h
+    faceBox.x * scaleX,
+    faceBox.y * scaleY,
+    faceBox.w * scaleX,
+    faceBox.h * scaleY
   );
 
   console.log("REGIONS:", regions);
+  
+  drawRegion(
+    ctx,
+    (faceBox.x + faceBox.w * 0.20) * scaleX,
+    faceBox.y * scaleY,
+    faceBox.w * 0.60 * scaleX,
+    faceBox.h * 0.28 * scaleY,
+    regions.forehead
+  );
+  
+  drawRegion(
+    ctx,
+    faceBox.x,
+    faceBox.y + faceBox.h * 0.28,
+    faceBox.w * 0.42,
+    faceBox.h * 0.44,
+    regions.left_cheek
+  );
 
-  drawRegion(ctx, faceBox.x + faceBox.w * 0.20, faceBox.y, faceBox.w * 0.60, faceBox.h * 0.28, regions.forehead);
-  drawRegion(ctx, faceBox.x, faceBox.y + faceBox.h * 0.28, faceBox.w * 0.42, faceBox.h * 0.44, regions.left_cheek);
-  drawRegion(ctx, faceBox.x + faceBox.w * 0.58, faceBox.y + faceBox.h * 0.28, faceBox.w * 0.42, faceBox.h * 0.44, regions.right_cheek);
-  drawRegion(ctx, faceBox.x + faceBox.w * 0.35, faceBox.y + faceBox.h * 0.25, faceBox.w * 0.30, faceBox.h * 0.53, regions.nose);
-  drawRegion(ctx, faceBox.x + faceBox.w * 0.25, faceBox.y + faceBox.h * 0.72, faceBox.w * 0.50, faceBox.h * 0.28, regions.chin);
+  drawRegion(
+    ctx,
+    faceBox.x + faceBox.w * 0.58,
+    faceBox.y + faceBox.h * 0.28,
+    faceBox.w * 0.42,
+    faceBox.h * 0.44,
+    regions.right_cheek
+  );
+
+  drawRegion(
+    ctx,
+    faceBox.x + faceBox.w * 0.35,
+    faceBox.y + faceBox.h * 0.25,
+    faceBox.w * 0.30,
+    faceBox.h * 0.53,
+    regions.nose
+  );
+
+  drawRegion(
+    ctx,
+    faceBox.x + faceBox.w * 0.25,
+    faceBox.y + faceBox.h * 0.72,
+    faceBox.w * 0.50,
+    faceBox.h * 0.28,
+    regions.chin
+  );
 
 }, [faceBox, regions]);
   async function startCamera() {
