@@ -57,54 +57,23 @@ useEffect(() => {
     faceBox.h * scaleY
   );
 
-  console.log("REGIONS:", regions);
-  
-  drawRegion(
-    ctx,
-    (faceBox.x + faceBox.w * 0.20) * scaleX,
-    faceBox.y * scaleY,
-    faceBox.w * 0.60 * scaleX,
-    faceBox.h * 0.28 * scaleY,
-    regions.forehead
-  );
-  
-  drawRegion(
-    ctx,
-    faceBox.x,
-    faceBox.y + faceBox.h * 0.28,
-    faceBox.w * 0.42,
-    faceBox.h * 0.44,
-    regions.left_cheek
-  );
+Object.values(regions).forEach((region: any) => {
+
+  console.log("REGION:", region);
 
   drawRegion(
     ctx,
-    faceBox.x + faceBox.w * 0.58,
-    faceBox.y + faceBox.h * 0.28,
-    faceBox.w * 0.42,
-    faceBox.h * 0.44,
-    regions.right_cheek
+    region.x * scaleX,
+    region.y * scaleY,
+    region.w * scaleX,
+    region.h * scaleY,
+    region
   );
 
-  drawRegion(
-    ctx,
-    faceBox.x + faceBox.w * 0.35,
-    faceBox.y + faceBox.h * 0.25,
-    faceBox.w * 0.30,
-    faceBox.h * 0.53,
-    regions.nose
-  );
-
-  drawRegion(
-    ctx,
-    faceBox.x + faceBox.w * 0.25,
-    faceBox.y + faceBox.h * 0.72,
-    faceBox.w * 0.50,
-    faceBox.h * 0.28,
-    regions.chin
-  );
+});
 
 }, [faceBox, regions]);
+  
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
