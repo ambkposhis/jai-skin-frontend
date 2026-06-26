@@ -29,35 +29,29 @@ useEffect(() => {
 
   if (!overlayRef.current) return;
   if (!videoRef.current) return;
-  if (!faceBox) return;
 
   const canvas = overlayRef.current;
   const video = videoRef.current;
 
-  const rect = video.getBoundingClientRect();
+  const draw = () => {
+    const rect = video.getBoundingClientRect();
 
-  canvas.width = rect.width;
-  canvas.height = rect.height;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
 
-  const scaleX = rect.width / video.videoWidth;
-  const scaleY = rect.height / video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+    // BIG RED TEST BOX
+    ctx.fillStyle = "rgba(255,0,0,0.5)";
+    ctx.fillRect(50, 50, 200, 200);
+  };
 
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 4;
+  draw();
 
-  ctx.strokeRect(
-      faceBox.x * scaleX,
-      faceBox.y * scaleY,
-      faceBox.w * scaleX,
-      faceBox.h * scaleY
-  );
-
-}, [faceBox]);
+}, []);
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
