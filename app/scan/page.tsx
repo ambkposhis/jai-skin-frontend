@@ -42,6 +42,13 @@ useEffect(() => {
   
   const scaleX = rect.width / video.videoWidth;
   const scaleY = rect.height / video.videoHeight;
+
+  console.log("VIDEO WIDTH:", video.videoWidth);
+  console.log("VIDEO HEIGHT:", video.videoHeight);
+  console.log("RECT:", rect);
+  console.log("SCALE X:", scaleX);
+  console.log("SCALE Y:", scaleY);
+
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
