@@ -263,8 +263,40 @@ Object.values(regions).forEach((region: any) => {
         
         </div>
         </div>
+        <div className="lg:hidden col-span-full mt-5">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">
+        
+            {/* Skin Score */}
+            <div className="min-w-[180px] snap-center rounded-3xl bg-white/10 border border-green-400/20 p-5 backdrop-blur-xl">
+              <p className="text-green-300 text-sm">Skin Score</p>
+              <h2 className="text-5xl font-bold mt-2">{skinScore}</h2>
+            </div>
+        
+            {/* Assessment */}
+            <div className="min-w-[180px] snap-center rounded-3xl bg-white/10 border border-green-400/20 p-5 backdrop-blur-xl">
+              <p className="text-green-300 text-sm">Assessment</p>
+              <h2 className="text-2xl font-bold mt-2">{assessment}</h2>
+            </div>
+        
+            {/* Face */}
+            <div className="min-w-[180px] snap-center rounded-3xl bg-white/10 border border-green-400/20 p-5 backdrop-blur-xl">
+              <p className="text-green-300 text-sm">Face</p>
+        
+              {faceDetected ? (
+                <h2 className="text-xl text-green-400 font-bold mt-2">
+                  🟢 Detected
+                </h2>
+              ) : (
+                <h2 className="text-xl text-red-400 font-bold mt-2">
+                  🔴 Not Found
+                </h2>
+              )}
+            </div>
+        
+          </div>
+        </div>
 
-        <div className="space-y-6">
+        <div className="hidden lg:block space-y-6">
 
           <div className="backdrop-blur-xl bg-white/10 border border-green-400/20 rounded-3xl p-6 shadow-2xl">
             <p className="text-green-300 text-lg">
