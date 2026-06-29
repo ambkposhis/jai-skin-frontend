@@ -37,9 +37,14 @@ export default function ScanPage() {
 	  const canvas = overlayRef.current;
 	  const video = videoRef.current;
 	
-	  canvas.width = video.videoWidth;
-	  canvas.height = video.videoHeight;
-	
+	  const rect = video.getBoundingClientRect();
+		
+	  canvas.width = rect.width;
+	  canvas.height = rect.height;
+		
+	  const scaleX = rect.width / video.videoWidth;
+	  const scaleY = rect.height / video.videoHeight;
+			
 	  const ctx = canvas.getContext("2d");
 	
 	  if (!ctx) return;
@@ -48,17 +53,81 @@ export default function ScanPage() {
 	
 	  if (!faceBox) return;
 	
-	  ctx.strokeStyle = "#00ff66";
-	  ctx.lineWidth = 4;
+	// Draw face box
+	ctx.strokeStyle = "#00ff66";
+	ctx.lineWidth = 4;
 	
-	  ctx.strokeRect(
-	    faceBox.x,
-	    faceBox.y,
-	    faceBox.w,
-	    faceBox.h
+	ctx.strokeRect(
+	  faceBox.x * scaleX,
+	  faceBox.y * scaleY,
+	  faceBox.w * scaleX,
+	  faceBox.h * scaleY
+	);
+	console.log("Regions:", regions);
+	
+	// Draw each region
+	Object.values(regions).forEach((region: any) => {
+	
+	  let color = "rgba(0,255,100,0.35)";
+	
+	  switch (region.label.toLowerCase()) {
+	
+	    case "pigmentation":
+	      color = "rgba(255,215,0,0.45)";
+	      break;
+	
+	    case "redness":
+	      color = "rgba(255,0,0,0.40)";
+	      break;
+	
+	    case "pores":
+	      color = "rgba(0,170,255,0.40)";
+	      break;
+	
+	    case "dark spots":
+	      color = "rgba(255,140,0,0.40)";
+	      break;
+	
+	    case "non inflammatory acne black heads":
+	      color = "rgba(0,120,255,0.40)";
+	      break;
+	
+	    case "non inflammatory acne white heads":
+	      color = "rgba(180,0,255,0.40)";
+	      break;
+	  }
+	
+	  // Filled region
+	  ctx.fillStyle = color;
+	  ctx.fillRect(
+		region.x * scaleX,
+		region.y * scaleY,
+		region.w * scaleX,
+		region.h * scaleY
 	  );
 	
-  }, [faceBox]);
+	  // Border
+	  ctx.strokeStyle = color.replace("0.40", "1").replace("0.45", "1").replace("0.35", "1");
+	  ctx.lineWidth = 2;
+	  ctx.strokeRect(
+		  region.x * scaleX,
+		  region.y * scaleY,
+		  region.w * scaleX,
+		  region.h * scaleY
+	  );
+	
+	  // Label
+	  ctx.fillStyle = "white";
+	  ctx.font = "16px Arial";
+	  ctx.fillText(
+	     region.label,
+		 region.x * scaleX + 5,
+		 region.y * scaleY + 18
+	  );
+	
+	});
+	
+  }, [faceBox, regions]);
 
   const startCamera = async () => {
     try {
@@ -116,6 +185,7 @@ export default function ScanPage() {
 
           const data =
             await response.json();
+		  console.log(data);
 
           setPredictions(
             data.top3 || []
@@ -138,6 +208,7 @@ export default function ScanPage() {
 		   setRegions(
 			  data.regions || {}
 		  );
+		  console.log("Regions received:", data.regions);
 
         } catch (error) {
           console.error(error);
@@ -178,9 +249,9 @@ export default function ScanPage() {
 		  />
 	
 		  <canvas
-		    ref={overlayRef}
-		    className="absolute top-0 left-0 w-full h-full pointer-events-none"
-		  />
+			  ref={overlayRef}
+			  className="absolute top-0 left-0 w-full h-full pointer-events-none scale-x-[-1]"
+			/>
 	
 		</div>
 		
@@ -335,10 +406,6 @@ export default function ScanPage() {
 	  </div>
 	
 	</div>
-	<canvas
-	  ref={canvasRef}
-	  className="hidden"
-	/>
 
 	</main>
 	);
