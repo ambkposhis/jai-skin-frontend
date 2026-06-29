@@ -16,6 +16,7 @@ export default function ScanPage() {
   const [assessment, setAssessment] =
     useState("");
   const [faceBox, setFaceBox] = useState<any>(null);
+  const [regions, setRegions] = useState<any>({});
 
   useEffect(() => {
     startCamera();
