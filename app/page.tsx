@@ -135,6 +135,9 @@ export default function ScanPage() {
 		  setFaceBox(
 		    data.face_box || null
 		  );
+		   setRegions(
+			  data.regions || {}
+		  );
 
         } catch (error) {
           console.error(error);
